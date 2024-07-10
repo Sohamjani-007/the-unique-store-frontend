@@ -17,22 +17,22 @@
           <h2>About Us</h2>
           <p>
             Welcome to UNIQUE, where creativity meets innovation. We specialize in crafting exceptional products that stand out from the ordinary. Our passion lies in creating unique solutions that redefine standards and inspire awe. With a commitment to quality and ingenuity, we strive to bring you products that not only meet but exceed your expectations. Explore our collection and discover the essence of originality with every item we offer. Join us on a journey where uniqueness is celebrated, and ordinary is left behind.
-            Discover Your Next Must-Have Gem. Beyond the Ordinary. Transform Your Style with Rarity
+            Discover Your Next Must-Have Gem. Beyond the Ordinary. Transform Your Style with Rarity.
           </p>
         </div>
         <div class="social-media">
           <h2>Follow Us</h2>
           <div class="social-icons">
-            <a href="https://www.instagram.com/yourinstagramhandle" target="_blank" class="social-icon">
+            <a href="https://www.instagram.com/yourinstagramhandle" target="_blank" class="social-icon instagram-text">
               <i class="fab fa-instagram"></i> Instagram
             </a>
-            <a href="https://www.facebook.com/yourfacebookhandle" target="_blank" class="social-icon">
+            <a href="https://www.facebook.com/yourfacebookhandle" target="_blank" class="social-icon facebook-text">
               <i class="fab fa-facebook"></i> Facebook
             </a>
-            <a href="https://www.twitter.com/yourtwitterhandle" target="_blank" class="social-icon">
+            <a href="https://www.twitter.com/yourtwitterhandle" target="_blank" class="social-icon twitter-text">
               <i class="fab fa-twitter"></i> Twitter
             </a>
-            <a href="https://www.youtube.com/youryoutubehandle" target="_blank" class="social-icon">
+            <a href="https://www.youtube.com/youryoutubehandle" target="_blank" class="social-icon youtube-text">
               <i class="fab fa-youtube"></i> YouTube
             </a>
           </div>
@@ -184,5 +184,77 @@ footer p {
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+/* Instagram Text Gradient Animation */
+.instagram-text {
+  font-family: 'Arial Black', sans-serif;
+  font-size: 1.5em;
+  background-image: linear-gradient(90deg, violet, indigo, blue, green, yellow, orange, red);
+  background-size: 600% 100%;
+  animation: rainbow-animation 10s infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  border-radius: 10px;
+}
+
+/* Facebook Text Gradient Animation */
+.facebook-text {
+  font-family: 'Arial Black', sans-serif;
+  font-size: 1.5em;
+  background-image: linear-gradient(90deg, #3b5998, #8b9dc3);
+  background-size: 600% 100%;
+  animation: facebook-animation 10s infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  border-radius: 10px;
+}
+
+/* Twitter Text Gradient Animation */
+.twitter-text {
+  font-family: 'Arial Black', sans-serif;
+  font-size: 1.5em;
+  background-image: linear-gradient(90deg, #00aced, #1da1f2);
+  background-size: 600% 100%;
+  animation: twitter-animation 10s infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  border-radius: 10px;
+}
+
+/* YouTube Text Gradient Animation */
+.youtube-text {
+  font-family: 'Arial Black', sans-serif;
+  font-size: 1.5em;
+  background-image: linear-gradient(90deg, #ff0000, #ff5e5e);
+  background-size: 600% 100%;
+  animation: youtube-animation 10s infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  border-radius: 10px;
+}
+
+@keyframes rainbow-animation {
+  0% { background-position: 0 0; }
+  100% { background-position: 100% 0; }
+}
+
+@keyframes facebook-animation {
+  0% { background-position: 0 0; }
+  100% { background-position: 100% 0; }
+}
+
+@keyframes twitter-animation {
+  0% { background-position: 0 0; }
+  100% { background-position: 100% 0; }
+}
+
+@keyframes youtube-animation {
+  0% { background-position: 0 0; }
+  100% { background-position: 100% 0; }
 }
 </style>

@@ -164,6 +164,7 @@ export default {
 
 .category {
   color: #666;
+  padding-bottom: 10px;
   font-size: 14px;
 }
 
