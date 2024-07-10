@@ -5,7 +5,7 @@
         type="text"
         v-model="searchQuery"
         @input="searchProducts"
-        placeholder="Search by category..."
+        placeholder="What are you looking for ?"
         class="search-input"
       />
       <div class="sorting-container">
