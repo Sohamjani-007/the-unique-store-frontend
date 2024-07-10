@@ -8,9 +8,16 @@
         placeholder="Search by category..."
         class="search-input"
       />
+      <div class="sorting-container">
+        <label for="sort-by">Sort by:</label>
+        <select id="sort-by" v-model="sortBy" @change="sortProducts" class="sort-by-select">
+          <option value="name">Name</option>
+          <option value="price">Price</option>
+        </select>
+      </div>
     </div>
     <div class="product-list">
-      <div v-for="product in filteredProducts" :key="product.id" class="product-card">
+      <div v-for="product in paginatedProducts" :key="product.id" class="product-card">
         <div class="image-container">
           <img :src="product.image" alt="Product Image" class="product-image" />
           <button @click="openModal(product.image)" class="zoom-button">Zoom</button>
@@ -18,12 +25,16 @@
         <div class="product-details">
           <h2>{{ product.name }}</h2>
           <p class="category">Category: {{ product.category }}</p>
-          <p class="price">Price: Rs. {{ product.price }}</p>
+          <p class="price">Price: Rs.{{ product.price }}</p>
           <a :href="product.link" target="_blank" class="view-product">View Product</a>
         </div>
       </div>
     </div>
-    <InfiniteLoading @infinite="loadMoreProducts"></InfiniteLoading>
+    <div class="pagination-controls">
+      <button @click="prevPage" :disabled="page === 1">Previous</button>
+      <span>Page {{ page }} of {{ totalPages }}</span>
+      <button @click="nextPage" :disabled="page === totalPages">Next</button>
+    </div>
 
     <div v-if="isModalOpen" class="modal" @click="closeModal">
       <span class="close" @click="closeModal">&times;</span>
@@ -42,11 +53,22 @@ export default {
       filteredProducts: [],
       searchQuery: '',
       page: 1,
-      limit: 10,
+      limit: 80,
+      sortBy: 'name',
       apiUrl: 'http://localhost:8222/products/', // Update with your Django API endpoint
       isModalOpen: false,
       modalImage: ''
     };
+  },
+  computed: {
+    totalPages() {
+      return Math.ceil(this.filteredProducts.length / this.limit);
+    },
+    paginatedProducts() {
+      const start = (this.page - 1) * this.limit;
+      const end = start + this.limit;
+      return this.filteredProducts.slice(start, end);
+    }
   },
   mounted() {
     this.fetchProducts();
@@ -57,26 +79,9 @@ export default {
         const response = await axios.get(this.apiUrl);
         this.products = response.data;
         this.filteredProducts = this.products; // Initialize filteredProducts with all products
+        this.sortProducts(); // Sort products initially
       } catch (error) {
         console.error('Error fetching products:', error);
-      }
-    },
-    async loadMoreProducts($state) {
-      try {
-        const response = await axios.get(`${this.apiUrl}?page=${this.page}&limit=${this.limit}`);
-        const newProducts = response.data;
-
-        if (newProducts.length) {
-          this.products = [...this.products, ...newProducts];
-          this.filteredProducts = this.products; // Update filteredProducts with all products after loading more
-          this.page++;
-          $state.loaded();
-        } else {
-          $state.complete();
-        }
-      } catch (error) {
-        console.error('Error loading more products:', error);
-        $state.complete();
       }
     },
     searchProducts() {
@@ -86,6 +91,27 @@ export default {
         this.filteredProducts = this.products.filter(product =>
           product.category.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
+      }
+      this.sortProducts(); // Sort after filtering
+      this.page = 1; // Reset to first page
+    },
+    sortProducts() {
+      this.filteredProducts.sort((a, b) => {
+        if (this.sortBy === 'name') {
+          return a.name.localeCompare(b.name);
+        } else if (this.sortBy === 'price') {
+          return a.price - b.price;
+        }
+      });
+    },
+    prevPage() {
+      if (this.page > 1) {
+        this.page--;
+      }
+    },
+    nextPage() {
+      if (this.page < this.totalPages) {
+        this.page++;
       }
     },
     openModal(image) {
@@ -120,11 +146,13 @@ export default {
 }
 
 .search-container {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 20px;
 }
 
 .search-input {
-  width: 100%;
+  flex: 1;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -134,6 +162,29 @@ export default {
 }
 
 .search-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 2px 4px rgba(35, 3, 68, 0.5);
+}
+
+.sorting-container {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.sorting-container label {
+  margin-right: 10px;
+  color: var(--text-color);
+}
+
+.sorting-container select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color var(--transition-duration), box-shadow var(--transition-duration);
+}
+
+.sorting-container select:focus {
   border-color: var(--primary-color);
   box-shadow: 0 2px 4px rgba(35, 3, 68, 0.5);
 }
@@ -155,11 +206,6 @@ export default {
 .product-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.product-card a {
-  display: block;
-  overflow: hidden;
 }
 
 .image-container {
@@ -189,10 +235,6 @@ export default {
 .zoom-button:hover {
   background-color: var(--accent-color);
   transform: scale(1.05);
-}
-
-.product-card a:hover .product-image {
-  transform: scale(1.1);
 }
 
 .product-details {
@@ -229,18 +271,46 @@ export default {
   text-decoration: none;
   padding: 8px 16px;
   border-radius: 4px;
-  transition: background-color var(--transition-duration), transform var (--transition-duration);
+  transition: background-color var(--transition-duration), transform var(--transition-duration);
 }
 
 .view-product:hover {
-  background-color: #d66928;
+  background-color: var(--primary-color);
+  transform: scale(1.05);
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-controls button {
+  padding: 8px 16px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  cursor: pointer;
+  transition: background-color var(--transition-duration), transform var(--transition-duration);
+}
+
+.pagination-controls button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-controls button:hover:not(:disabled) {
+  background-color: var(--accent-color);
   transform: scale(1.05);
 }
 
 .modal {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -249,30 +319,51 @@ export default {
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.8);
+  animation: fadeIn var(--transition-duration) ease-in-out;
 }
 
 .modal-content {
   max-width: 90%;
   max-height: 90%;
+  animation: zoomIn var(--transition-duration) ease-in-out;
 }
 
 .close {
   position: absolute;
-  top: 15px;
-  right: 35px;
+  top: 10px;
+  right: 25px;
   color: #fff;
-  font-size: 40px;
+  font-size: 35px;
   font-weight: bold;
   cursor: pointer;
   transition: color var(--transition-duration);
 }
 
-.close:hover,
-.close:focus {
+.close:hover {
   color: var(--accent-color);
-  text-decoration: none;
-  cursor: pointer;
 }
+
+.sort-by-select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  transition: background-color var(--transition-duration), color var(--transition-duration);
+}
+
+.sort-by-select option {
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
+}
+
+.sort-by-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 2px 4px rgba(35, 3, 68, 0.5);
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
 
 @keyframes fadeIn {
   from {
@@ -280,6 +371,15 @@ export default {
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
   }
 }
 </style>
