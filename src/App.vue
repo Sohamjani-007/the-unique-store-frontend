@@ -16,8 +16,7 @@
         <div class="about-us">
           <h2>About Us</h2>
           <p>
-            Welcome to UNIQUE, where creativity meets innovation. We specialize in crafting exceptional products that stand out from the ordinary. Our passion lies in creating unique solutions that redefine standards and inspire awe. With a commitment to quality and ingenuity, we strive to bring you products that not only meet but exceed your expectations. Explore our collection and discover the essence of originality with every item we offer. Join us on a journey where uniqueness is celebrated, and ordinary is left behind.
-            Discover Your Next Must-Have Gem. Beyond the Ordinary. Transform Your Style with Rarity.
+            Welcome to UNIQUE, where creativity meets innovation. We specialize in crafting exceptional products that stand out from the ordinary. Our passion lies in creating unique solutions that redefine standards and inspire awe. With a commitment to quality and ingenuity, we strive to bring you products that not only meet but exceed your expectations. Explore our collection and discover the essence of originality with every item we offer. Join us on a journey where uniqueness is celebrated, and ordinary is left behind. Discover Your Next Must-Have Gem. Beyond the Ordinary. Transform Your Style with Rarity.
           </p>
         </div>
         <div class="social-media">
@@ -83,6 +82,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 1000;
+  background-image: url('https://www.transparenttextures.com/patterns/skulls.png'); /* Pattern */
   animation: slideInDown var(--transition-duration) ease-in-out;
 }
 
@@ -111,6 +111,7 @@ footer {
   text-align: center;
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
   animation: slideInUp var(--transition-duration) ease-in-out;
+  background-image: url('https://www.transparenttextures.com/patterns/skulls.png'); /* Pattern */
 }
 
 .footer-content {
