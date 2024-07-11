@@ -36,6 +36,12 @@
             </a>
           </div>
         </div>
+        <div class="contact-us">
+          <h2>Contact Us</h2>
+          <p>Email: contact@theuniquestore.com</p>
+          <p>Phone: +1 234 567 890</p>
+          <p>Address: 123 Unique Street, Creativity City, IN 45678</p>
+        </div>
       </div>
       <p>&copy; 2024 THE UNIQUE STORE</p>
     </footer>
@@ -107,7 +113,7 @@ main {
 footer {
   background-color: var(--primary-color);
   color: var(--secondary-color);
-  padding: 15px;
+  padding: 15px 20px;
   text-align: center;
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
   animation: slideInUp var(--transition-duration) ease-in-out;
@@ -116,28 +122,32 @@ footer {
 
 .footer-content {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
   margin-bottom: 20px;
 }
 
-.about-us, .social-media {
-  margin-bottom: 20px;
+.about-us, .social-media, .contact-us {
+  flex: 1;
+  max-width: 30%;
+  margin: 10px;
+  text-align: left;
 }
 
-.about-us h2, .social-media h2 {
+.about-us h2, .social-media h2, .contact-us h2 {
   font-size: 1.5rem;
   margin-bottom: 10px;
 }
 
-.about-us p {
+.about-us p, .contact-us p {
   max-width: 600px;
-  text-align: center;
 }
 
 .social-icons {
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .social-icon {
