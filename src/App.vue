@@ -38,10 +38,21 @@
         </div>
         <div class="contact-us">
           <h2>Contact Us</h2>
-          <p>Email: contact@theuniquestore.com</p>
-          <p>Phone: +1 234 567 890</p>
+          <p>Email: <a href="mailto:contact@theuniquestore.com">contact@theuniquestore.com</a></p>
+          <p>Phone: <a href="tel:+1234567890">+1 234 567 890</a></p>
           <p>Address: 123 Unique Street, Creativity City, IN 45678</p>
         </div>
+        <div class="newsletter">
+          <h2>Subscribe to our Newsletter</h2>
+          <form @submit.prevent="subscribeNewsletter">
+            <input type="email" v-model="email" placeholder="Your email address" required />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms-of-service">Terms of Service</a>
       </div>
       <p>&copy; 2024 THE UNIQUE STORE</p>
     </footer>
@@ -51,6 +62,17 @@
 <script>
 export default {
   name: 'App',
+  data() {
+    return {
+      email: '',
+    };
+  },
+  methods: {
+    subscribeNewsletter() {
+      // Handle newsletter subscription
+      alert(`Subscribed with email: ${this.email}`);
+    },
+  },
 };
 </script>
 
@@ -128,19 +150,19 @@ footer {
   margin-bottom: 20px;
 }
 
-.about-us, .social-media, .contact-us {
+.about-us, .social-media, .contact-us, .newsletter {
   flex: 1;
-  max-width: 30%;
+  max-width: 25%;
   margin: 10px;
   text-align: left;
 }
 
-.about-us h2, .social-media h2, .contact-us h2 {
+.about-us h2, .social-media h2, .contact-us h2, .newsletter h2 {
   font-size: 1.5rem;
   margin-bottom: 10px;
 }
 
-.about-us p, .contact-us p {
+.about-us p, .contact-us p, .newsletter p {
   max-width: 600px;
 }
 
@@ -164,6 +186,63 @@ footer {
 footer p {
   margin: 0;
   font-size: 1rem;
+}
+
+.footer-links {
+  margin: 20px 0;
+}
+
+.footer-links a {
+  margin: 0 10px;
+  color: var(--secondary-color);
+  text-decoration: none;
+  transition: color var(--transition-duration);
+}
+
+.footer-links a:hover {
+  color: var(--accent-color);
+}
+
+.newsletter form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.newsletter input {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.newsletter button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
+  cursor: pointer;
+  transition: background-color var(--transition-duration);
+}
+
+.newsletter button:hover {
+  background-color: darken(var(--accent-color), 10%);
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-us, .social-media, .contact-us, .newsletter {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .newsletter form {
+    align-items: center;
+  }
 }
 
 @keyframes slideInDown {
