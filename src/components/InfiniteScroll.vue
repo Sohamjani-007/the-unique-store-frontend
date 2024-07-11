@@ -5,7 +5,7 @@
         type="text"
         v-model="searchQuery"
         @input="searchProducts"
-        placeholder="What are you looking for ?"
+        placeholder="What are you looking for?"
         class="search-input"
       />
       <div class="sorting-container">
@@ -89,7 +89,8 @@ export default {
         this.filteredProducts = this.products; // Reset to show all products if search query is empty
       } else {
         this.filteredProducts = this.products.filter(product =>
-          product.category.toLowerCase().includes(this.searchQuery.toLowerCase())
+          product.category.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          product.name.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
       }
       this.sortProducts(); // Sort after filtering
