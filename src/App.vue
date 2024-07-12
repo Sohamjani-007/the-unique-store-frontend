@@ -38,8 +38,8 @@
         </div>
         <div class="contact-us">
           <h2>Contact Us</h2>
-          <p>Email: <a href="mailto:contact@theuniquestore.com">contact@theuniquestore.com</a></p>
-          <p>Phone: <a href="tel:+1234567890">+1 234 567 890</a></p>
+          <p>Email: <a href="mailto:contact@theuniquestore.com" class="contact-link">contact@theuniquestore.com</a></p>
+          <p>Phone: <a href="tel:+1234567890" class="contact-link">+1 234 567 890</a></p>
           <p>Address: 123 Unique Street, Creativity City, IN 45678</p>
         </div>
         <div class="newsletter">
@@ -51,8 +51,8 @@
         </div>
       </div>
       <div class="footer-links">
-        <a href="/privacy-policy">Privacy Policy</a>
-        <a href="/terms-of-service">Terms of Service</a>
+        <a href="/privacy-policy" class="quick-link">Privacy Policy</a>
+        <a href="/terms-of-service" class="quick-link">Terms of Service</a>
       </div>
       <p>&copy; 2024 THE UNIQUE STORE</p>
     </footer>
@@ -181,6 +181,21 @@ footer {
 
 .social-icon:hover {
   color: var(--accent-color);
+}
+
+.contact-link {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  text-decoration: none;
+  transition: color var(--transition-duration);
+}
+
+.contact-link:hover {
+  color: var(--accent-color);
+}
+
+.contact-link:active {
+  color: #f79e3b; /* Different shade of orange */
 }
 
 footer p {
