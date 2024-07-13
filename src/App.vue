@@ -124,11 +124,14 @@ header {
   z-index: 1000;
   background-image: url('https://www.transparenttextures.com/patterns/skulls.png'); /* Pattern */
   animation: slideInDown var(--transition-duration) ease-in-out;
+  display: flex;
+  justify-content: center; /* Center the title */
+  align-items: center; /* Center items vertically */
 }
 
 header h1 {
   font-size: 2.5rem;
-  margin-bottom: 0;
+  margin: 0 auto; /* Center the title horizontally */
   transition: color var(--transition-duration);
 }
 
@@ -136,7 +139,9 @@ header h1:hover {
   color: var(--accent-color);
 }
 
-.sale-button {
+header .sale-button {
+  position: absolute;
+  right: 20px; /* Position the button to the right corner */
   padding: 10px 20px;
   background-color: var(--accent-color);
   color: var(--secondary-color);
@@ -146,7 +151,6 @@ header h1:hover {
   cursor: pointer;
   animation: blink 1s infinite;
 }
-
 
 @keyframes blink {
   0%, 100% {
@@ -287,7 +291,6 @@ footer p {
   border-radius: 50%;
   width: 50px;
   height: 50px;
-  font-size: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
