@@ -10,6 +10,11 @@
       <router-view />
     </main>
 
+    <!-- Scroll to Top Button -->
+    <button @click="scrollToTop" class="scroll-to-top-btn">
+      <i class="fas fa-chevron-up"></i>
+    </button>
+
     <!-- Footer -->
     <footer>
       <div class="footer-content">
@@ -71,6 +76,9 @@ export default {
     subscribeNewsletter() {
       // Handle newsletter subscription
       alert(`Subscribed with email: ${this.email}`);
+    },
+    scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     },
   },
 };
@@ -242,6 +250,30 @@ footer p {
 
 .newsletter button:hover {
   background-color: darken(var(--accent-color), 10%);
+}
+
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color var(--transition-duration);
+  opacity: 0.7;
+}
+
+.scroll-to-top-btn:hover {
+  background-color: var(--accent-color);
+  opacity: 1;
 }
 
 @media (max-width: 768px) {
