@@ -1,12 +1,20 @@
+// src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';  // Ensure the correct relative path
+import Home from '../views/HomeView.vue'; // Adjust the import paths as necessary
+import Sale from '../views/SalePage.vue'; // Ensure the Sale component path is correct
 
 const routes = [
   {
     path: '/',
-    name: 'HomeView',
-    component: HomeView
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/sale',
+    name: 'Sale',
+    component: Sale
   }
+  // Add other routes as needed
 ];
 
 const router = createRouter({

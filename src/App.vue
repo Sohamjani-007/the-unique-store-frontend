@@ -3,6 +3,7 @@
     <!-- Header or Navigation Bar -->
     <header>
       <h1>THE UNIQUE STORE</h1>
+      <button @click="goToSale" class="sale-button">SALE</button>
     </header>
 
     <!-- Main Content Area -->
@@ -80,6 +81,9 @@ export default {
     scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     },
+    goToSale() {
+      this.$router.push({ name: 'Sale' });
+    },
   },
 };
 </script>
@@ -130,6 +134,27 @@ header h1 {
 
 header h1:hover {
   color: var(--accent-color);
+}
+
+.sale-button {
+  padding: 10px 20px;
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  animation: blink 1s infinite;
+}
+
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 main {
