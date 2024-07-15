@@ -12,7 +12,7 @@
     </main>
 
     <!-- Scroll to Top Button -->
-    <button @click="scrollToTop" class="scroll-to-top-btn">
+    <button v-show="showScrollToTopButton" @click="scrollToTop" class="scroll-to-top-btn">
       <i class="fas fa-chevron-up"></i>
     </button>
 
@@ -71,7 +71,13 @@ export default {
   data() {
     return {
       email: '',
+      scrollPosition: 0
     };
+  },
+  computed: {
+    showScrollToTopButton() {
+      return this.scrollPosition > 0;
+    }
   },
   methods: {
     subscribeNewsletter() {
@@ -84,7 +90,16 @@ export default {
     goToSale() {
       this.$router.push({ name: 'Sale' });
     },
+    updateScroll() {
+      this.scrollPosition = window.scrollY;
+    }
   },
+  mounted() {
+    window.addEventListener('scroll', this.updateScroll);
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.updateScroll);
+  }
 };
 </script>
 
