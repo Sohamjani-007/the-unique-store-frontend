@@ -7,9 +7,9 @@
       <div class="sale-item" v-for="item in saleItems" :key="item.id">
         <img :src="item.image" :alt="item.name" />
         <h2>{{ item.name }}</h2>
-        <p>{{ item.description }}</p>
-        <p class="original-price">Was: Rs. {{ item.original_price }}</p>
-        <p class="sale-price">Now: Rs. {{ item.sale_price }}</p>
+        <p class="description">{{ item.description }}</p>
+        <p class="original-price">Was: ${{ item.original_price }}</p>
+        <p class="sale-price">Now: ${{ item.sale_price }}</p>
         <a :href="item.url" target="_blank" class="view-product">View Product</a>
       </div>
     </div>
@@ -74,6 +74,16 @@ export default {
 
       observer.observe(this.$refs.bottom);
     },
+    redirectToUrl(url) {
+      window.location.href = url;
+    },
+    openModal(image) {
+      this.modalImage = image;
+      this.isModalOpen = true;
+    },
+    closeModal() {
+      this.isModalOpen = false;
+    }
   }
 };
 </script>
@@ -120,9 +130,14 @@ export default {
   margin: 10px 0;
 }
 
-.sale-item p {
+.sale-item .description {
   font-size: 1rem;
   margin: 10px 0;
+  transition: color var(--transition-duration);
+}
+
+.sale-item .description:hover {
+  color: var(--accent-color);
 }
 
 .original-price {
@@ -144,7 +159,7 @@ export default {
   border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color var(--transition-duration);
 }
 
 .sale-item button:hover {
