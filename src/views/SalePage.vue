@@ -8,8 +8,8 @@
         <img :src="item.image" :alt="item.name" />
         <h2>{{ item.name }}</h2>
         <p class="description">{{ item.description }}</p>
-        <p class="original-price">Was: ${{ item.original_price }}</p>
-        <p class="sale-price">Now: ${{ item.sale_price }}</p>
+        <p class="original-price">Was: Rs. {{ item.original_price }}</p>
+        <p class="sale-price">Now: Rs. {{ item.sale_price }}</p>
         <a :href="item.url" target="_blank" class="view-product">View Product</a>
       </div>
     </div>
