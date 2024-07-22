@@ -33,7 +33,7 @@ export default {
       page: 1,
       limit: 80,
       loading: false,
-      apiUrl: 'http://localhost:8222/api/sale-items/', // Update with your Django API endpoint
+      apiUrl: 'https://the-unique-store-backend.onrender.com/api/sale-items/', // Update with your Django API endpoint
       isModalOpen: false,
       modalImage: ''
     };
