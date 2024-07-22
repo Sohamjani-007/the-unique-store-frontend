@@ -7,31 +7,82 @@
       <div class="sale-item" v-for="item in saleItems" :key="item.id">
         <img :src="item.image" :alt="item.name" />
         <h2>{{ item.name }}</h2>
-        <p>{{ item.description }}</p>
-        <p class="original-price">Was: ${{ item.originalPrice }}</p>
-        <p class="sale-price">Now: ${{ item.salePrice }}</p>
-        <button @click="addToCart(item)">Add to Cart</button>
+        <p class="description">{{ item.description }}</p>
+        <p class="original-price">Was: Rs. {{ item.original_price }}</p>
+        <p class="sale-price">Now: Rs. {{ item.sale_price }}</p>
+        <a :href="item.url" target="_blank" class="view-product">View Product</a>
       </div>
+    </div>
+    <div v-if="loading" class="loading">Loading more items...</div>
+    <div ref="bottom" class="bottom-observer"></div>
+    <div v-if="isModalOpen" class="modal" @click="closeModal">
+      <span class="close" @click="closeModal">&times;</span>
+      <img class="modal-content" :src="modalImage">
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'SalePage',
   data() {
     return {
-      saleItems: [
-        { id: 1, name: 'Item 1', description: 'Description for item 1', originalPrice: 100, salePrice: 50, image: 'path/to/image1.jpg' },
-        { id: 2, name: 'Item 2', description: 'Description for item 2', originalPrice: 150, salePrice: 75, image: 'path/to/image2.jpg' },
-        // Add more sale items as needed
-      ]
+      saleItems: [],
+      page: 1,
+      limit: 80,
+      loading: false,
+      apiUrl: 'http://localhost:8222/api/sale-items/', // Update with your Django API endpoint
+      isModalOpen: false,
+      modalImage: ''
     };
   },
+  mounted() {
+    this.fetchSaleItems();
+    this.setupIntersectionObserver();
+  },
   methods: {
-    addToCart(item) {
-      // Handle adding item to cart
-      alert(`Added ${item.name} to cart!`);
+    async fetchSaleItems() {
+      if (this.loading) return;
+      this.loading = true;
+      try {
+        const response = await axios.get(`${this.apiUrl}?page=${this.page}`);
+        const data = response.data.results; // Assuming your API returns paginated results with 'results' key
+        this.saleItems = [...this.saleItems, ...data];
+        this.page++;
+      } catch (error) {
+        console.error("Error fetching sale items:", error);
+      } finally {
+        this.loading = false;
+      }
+    },
+    setupIntersectionObserver() {
+      const options = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 1.0
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            this.fetchSaleItems();
+          }
+        });
+      }, options);
+
+      observer.observe(this.$refs.bottom);
+    },
+    redirectToUrl(url) {
+      window.location.href = url;
+    },
+    openModal(image) {
+      this.modalImage = image;
+      this.isModalOpen = true;
+    },
+    closeModal() {
+      this.isModalOpen = false;
     }
   }
 };
@@ -79,9 +130,14 @@ export default {
   margin: 10px 0;
 }
 
-.sale-item p {
+.sale-item .description {
   font-size: 1rem;
   margin: 10px 0;
+  transition: color var(--transition-duration);
+}
+
+.sale-item .description:hover {
+  color: var(--accent-color);
 }
 
 .original-price {
@@ -103,10 +159,91 @@ export default {
   border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color var(--transition-duration);
 }
 
 .sale-item button:hover {
   background-color: darken(var(--accent-color), 10%);
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--accent-color);
+}
+
+.bottom-observer {
+  width: 100%;
+  height: 20px;
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+  animation: fadeIn var(--transition-duration) ease-in-out;
+}
+
+.modal-content {
+  max-width: 90%;
+  max-height: 90%;
+  animation: zoomIn var(--transition-duration) ease-in-out;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  color: #fff;
+  font-size: 35px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color var(--transition-duration);
+}
+
+.close:hover {
+  color: var(--accent-color);
+}
+
+.view-product {
+  display: inline-block;
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color var(--transition-duration), transform var(--transition-duration);
+}
+
+.view-product:hover {
+  background-color: var(--primary-color);
+  transform: scale(1.05);
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 </style>

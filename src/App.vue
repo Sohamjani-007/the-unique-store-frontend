@@ -2,6 +2,7 @@
   <div id="app">
     <!-- Header or Navigation Bar -->
     <header>
+      <button @click="goBack" class="back-button">Back</button>
       <h1>THE UNIQUE STORE</h1>
       <button @click="goToSale" class="sale-button">SALE</button>
     </header>
@@ -90,6 +91,9 @@ export default {
     goToSale() {
       this.$router.push({ name: 'Sale' });
     },
+    goBack() {
+      this.$router.go(-1);
+    },
     updateScroll() {
       this.scrollPosition = window.scrollY;
     }
@@ -140,13 +144,13 @@ header {
   background-image: url('https://www.transparenttextures.com/patterns/skulls.png'); /* Pattern */
   animation: slideInDown var(--transition-duration) ease-in-out;
   display: flex;
-  justify-content: center; /* Center the title */
-  align-items: center; /* Center items vertically */
+  justify-content: space-between;
+  align-items: center;
 }
 
 header h1 {
   font-size: 2.5rem;
-  margin: 0 auto; /* Center the title horizontally */
+  margin: 0 auto;
   transition: color var(--transition-duration);
 }
 
@@ -155,8 +159,6 @@ header h1:hover {
 }
 
 header .sale-button {
-  position: absolute;
-  right: 20px; /* Position the button to the right corner */
   padding: 10px 20px;
   background-color: var(--accent-color);
   color: var(--secondary-color);
@@ -165,6 +167,20 @@ header .sale-button {
   font-size: 1.2rem;
   cursor: pointer;
   animation: blink 1s infinite;
+}
+
+header .back-button {
+  padding: 10px 20px;
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+header .back-button {
+  margin-left: 20px;
 }
 
 @keyframes blink {
@@ -436,5 +452,25 @@ footer p {
 @keyframes youtube-animation {
   0% { background-position: 0 0; }
   100% { background-position: 100% 0; }
+}
+
+/* Highlighted Sort by Section */
+.sort-by-section {
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.sort-by-section label {
+  font-weight: bold;
+}
+
+.sort-by-section select {
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  margin-left: 10px;
 }
 </style>

@@ -1,3 +1,4 @@
+
 <template>
   <div class="product-list-container">
     <div class="search-container">
@@ -9,7 +10,7 @@
         class="search-input"
       />
       <div class="filter-container">
-        <label for="filter-by-category">Filter by</label>
+        <label for="filter-by-category">Filter by Category:</label>
         <select id="filter-by-category" v-model="selectedCategory" @change="searchAndFilterProducts" class="filter-by-category-select">
           <option value="">All Categories</option>
           <option v-for="category in uniqueCategories" :key="category" :value="category">{{ category }}</option>
@@ -50,6 +51,7 @@
   </div>
 </template>
 
+
 <script>
 import axios from 'axios';
 
@@ -63,7 +65,7 @@ export default {
       page: 1,
       limit: 80,
       sortBy: 'name',
-      apiUrl: 'https://the-unique-store-backend.onrender.com/products/', // Update with your Django API endpoint
+      apiUrl: 'http://localhost:8222/products/', // Update with your Django API endpoint
       isModalOpen: false,
       modalImage: ''
     };
@@ -74,8 +76,7 @@ export default {
     },
     paginatedProducts() {
       const start = (this.page - 1) * this.limit;
-      const end = start + this.limit;
-      return this.filteredProducts.slice(start, end);
+      return this.filteredProducts.slice(start, start + this.limit);
     },
     uniqueCategories() {
       const categories = this.products.map(product => product.category);
@@ -136,6 +137,8 @@ export default {
 };
 </script>
 
+
+
 <style scoped>
 :root {
   --primary-color: #230344; /* Deep purple */
@@ -160,10 +163,11 @@ export default {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .search-input {
-  flex: 1;
+  flex: 1 1 100%;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -177,48 +181,25 @@ export default {
   box-shadow: 0 2px 4px rgba(35, 3, 68, 0.5);
 }
 
-.filter-container {
-  display: flex;
-  align-items: center;
-  margin-left: 20px;
+.filter-container, .sorting-container {
+  margin-top: 10px;
 }
 
-.filter-container label {
+.filter-container label, .sorting-container label {
   margin-right: 10px;
   color: var(--text-color);
 }
 
-.filter-by-category-select {
+.filter-by-category-select, .sort-by-select {
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  transition: border-color var(--transition-duration), box-shadow var(--transition-duration);
-}
-
-.filter-by-category-select:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 2px 4px rgba(35, 3, 68, 0.5);
-}
-
-.sorting-container {
-  display: flex;
-  align-items: center;
-  margin-left: 20px;
-}
-
-.sorting-container label {
-  margin-right: 10px;
+  background-color: var(--secondary-color);
   color: var(--text-color);
+  transition: background-color var(--transition-duration), color var(--transition-duration);
 }
 
-.sorting-container select {
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  transition: border-color var(--transition-duration), box-shadow var(--transition-duration);
-}
-
-.sorting-container select:focus {
+.filter-by-category-select:focus, .sort-by-select:focus {
   border-color: var(--primary-color);
   box-shadow: 0 2px 4px rgba(35, 3, 68, 0.5);
 }
@@ -297,6 +278,7 @@ export default {
   margin-bottom: 10px;
   color: var(--text-color);
 }
+
 
 .view-product {
   display: inline-block;
@@ -397,7 +379,6 @@ export default {
   background-color: var(--primary-color);
   color: var(--secondary-color);
 }
-
 
 @keyframes fadeIn {
   from {
