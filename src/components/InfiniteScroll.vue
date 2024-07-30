@@ -207,6 +207,7 @@ export default {
 }
 
 .filter-by-category-select {
+  width: 180px;
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -414,6 +415,7 @@ export default {
 }
 
 .filter-by-category-select option, .sort-by-select option {
+  max-width: 180px !important;
   background-color: var(--accent-color);
   color: var(--secondary-color);
 }
