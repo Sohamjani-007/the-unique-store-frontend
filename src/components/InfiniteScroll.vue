@@ -64,7 +64,7 @@ export default {
       page: 1,
       limit: 80,
       sortBy: 'name',
-      apiUrl: 'http://localhost:8222/products/', // Update with your Django API endpoint
+      apiUrl: 'https://the-unique-store-backend.onrender.com/products/', // Update with your Django API endpoint
       isModalOpen: false,
       modalImage: ''
     };
