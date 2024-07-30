@@ -2,7 +2,7 @@
   <div id="app">
     <!-- Header or Navigation Bar -->
     <header>
-      <button @click="goBack" class="back-button">Back</button>
+      <button v-if="showBackButton" @click="goBack" class="back-button">Back</button>
       <h1>THE UNIQUE STORE</h1>
       <button @click="goToSale" class="sale-button">SALE</button>
     </header>
@@ -72,12 +72,14 @@ export default {
   data() {
     return {
       email: '',
-      scrollPosition: 0
+      scrollPosition: 0,
+      showBackButton: this.$route.name !== 'Home' // Initialize based on current route
     };
   },
-  computed: {
-    showScrollToTopButton() {
-      return this.scrollPosition > 0;
+  watch: {
+    '$route'(to) {
+      // Update showBackButton when the route changes
+      this.showBackButton = to.name !== 'Home';
     }
   },
   methods: {
@@ -96,6 +98,11 @@ export default {
     },
     updateScroll() {
       this.scrollPosition = window.scrollY;
+    }
+  },
+  computed: {
+    showScrollToTopButton() {
+      return this.scrollPosition > 0;
     }
   },
   mounted() {

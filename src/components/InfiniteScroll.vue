@@ -5,8 +5,9 @@
         type="text"
         v-model="searchQuery"
         @input="searchAndFilterProducts"
-        placeholder="What are you looking for?"
-        class="search-input"
+        placeholder="Search Your Product Here"
+        class="search-input custom-placeholder"
+
       />
       <div class="filter-container">
         <label for="filter-by-category">Filter by</label>
@@ -16,7 +17,7 @@
         </select>
       </div>
       <div class="sorting-container">
-        <label for="sort-by">Sort by:</label>
+        <label for="sort-by">Sort by</label>
         <select id="sort-by" v-model="sortBy" @change="sortProducts" class="sort-by-select">
           <option value="name">Name</option>
           <option value="price">Price</option>
@@ -158,18 +159,21 @@ export default {
 
 .search-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   margin-bottom: 20px;
 }
 
 .search-input {
-  flex: 1;
+  flex: 20;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: border-color var(--transition-duration), box-shadow var(--transition-duration);
+  background-image: linear-gradient(90deg, powderblue, orange);
+  margin-bottom: 10px;
 }
 
 .search-input:focus {
@@ -177,10 +181,24 @@ export default {
   box-shadow: 0 2px 4px rgba(35, 3, 68, 0.5);
 }
 
+.custom-placeholder::placeholder {
+  color: #230344; /* Change this to your desired color */
+  opacity: 1; /* Ensure the color is fully opaque */
+}
+
 .filter-container {
   display: flex;
   align-items: center;
   margin-left: 20px;
+  flex: 6;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color var(--transition-duration), box-shadow var(--transition-duration);
+  background-image: linear-gradient(90deg, orange, powderblue);
+  margin-bottom: 10px;
 }
 
 .filter-container label {
@@ -189,6 +207,7 @@ export default {
 }
 
 .filter-by-category-select {
+  width: 180px;
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -204,6 +223,15 @@ export default {
   display: flex;
   align-items: center;
   margin-left: 20px;
+  flex: 2;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color var(--transition-duration), box-shadow var(--transition-duration);
+  background-image: linear-gradient(90deg, powderblue, orange);
+  margin-bottom: 10px;
 }
 
 .sorting-container label {
@@ -364,10 +392,10 @@ export default {
 
 .close {
   position: absolute;
-  top: 10px;
-  right: 25px;
-  color: #fff;
-  font-size: 35px;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
   font-weight: bold;
   cursor: pointer;
   transition: color var(--transition-duration);
@@ -381,12 +409,13 @@ export default {
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  background-color: var(--secondary-color);
-  color: var(--text-color);
+  background-color: #F7E8D3;
+  color: #ff5e5e;
   transition: background-color var(--transition-duration), color var(--transition-duration);
 }
 
 .filter-by-category-select option, .sort-by-select option {
+  max-width: 180px !important;
   background-color: var(--accent-color);
   color: var(--secondary-color);
 }
