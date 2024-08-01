@@ -186,10 +186,6 @@ header .back-button {
   cursor: pointer;
 }
 
-header .back-button {
-  margin-left: 20px;
-}
-
 @keyframes blink {
   0%, 100% {
     opacity: 1;

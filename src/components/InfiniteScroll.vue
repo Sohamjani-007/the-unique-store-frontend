@@ -251,6 +251,15 @@ export default {
   box-shadow: 0 2px 4px rgba(35, 3, 68, 0.5);
 }
 
+@media screen and (max-width: 480px) {
+  .filter-container{
+    margin-left: 0px;
+  }
+  .sorting-container {
+  margin-left: 0px;
+}
+}
+
 .product-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
